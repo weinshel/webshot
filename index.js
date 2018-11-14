@@ -1,3 +1,10 @@
+/*
+ * you will need to generate BROWSING DATA
+ * you can use the included browser extension to do so
+ * it will generate some files in your downloads folder
+ * and then you need to put them in the data/ folder in this repo
+ */
+
 const puppeteer = require('puppeteer');
 
 async function main() {
