@@ -41,7 +41,8 @@ async function infer(text) {
   
   let result_category = null;
   let conf_score = 0;
-  const tr_struc = await buildTree.build('./inferencing/data/keywords.json', './inferencing/data/words2idx_dict.json', './inferencing/data/cut_one_dict.json');
+  const path = './scraper/inferencing/data/'
+  const tr_struc = await buildTree.build(path + 'keywords.json', path + 'words2idx_dict.json', path + 'cut_one_dict.json');
   const tr = tr_struc[0];
   const word2idx = tr_struc[1];
   const allExistWords = tr_struc[2];

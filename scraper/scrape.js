@@ -19,6 +19,7 @@ async function main () {
   await page.exposeFunction('extractTextFromNode', extractTextFromNode)
 
   let hist = JSON.parse(fs.readFileSync('data/raw/history.json'))
+  let data = []
 
   for (let p of hist) {
     if (!p.title || p.title === '') {
@@ -39,6 +40,7 @@ async function main () {
       const i = await inferencing.infer(text)
       p.inference = i
 
+      data.push(p)
       console.log(p.title, p.url, p.inference)
     } catch (e) {
       console.log(e)
@@ -46,7 +48,7 @@ async function main () {
   }
 
   await browser.close()
-  fs.writeFileSync('data/res/data.json', JSON.stringify(hist, 2))
+  fs.writeFileSync('data/res/data.json', JSON.stringify(data, null, 2))
 }
 
 function download (url, dest) {
