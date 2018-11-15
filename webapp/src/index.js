@@ -11,6 +11,7 @@ import data from '../../data/res/data.json'
 
 import { themeOverrides } from './colors'
 import RawData from './components/RawData'
+import PageShots from './components/PageShots'
 
 theme.use({ overrides: themeOverrides })
 
@@ -18,7 +19,7 @@ class Popup extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      selectedIndex: 0
+      selectedIndex: 1
     }
   }
 
@@ -39,6 +40,9 @@ class Popup extends React.Component {
           <Text>
             hello hello
           </Text>
+        </TabPanel>
+        <TabPanel title='Screenshots'>
+          <PageShots data={data} />
         </TabPanel>
         <TabPanel title='Raw Data'>
           <RawData data={data} />
