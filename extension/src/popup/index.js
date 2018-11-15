@@ -21,7 +21,8 @@ class Popup extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      selectedIndex: 0
+      selectedIndex: 0,
+      maxResults: 99999
     }
 
     this.liberateData = this.liberateData.bind(this)
@@ -30,7 +31,7 @@ class Popup extends React.Component {
   async liberateData () {
     this.downloadHistory()
     this.downloadDownloads()
-    // this.downloadCookies()
+    this.downloadCookies()
   }
 
   async downloadHistory () {
@@ -46,10 +47,10 @@ class Popup extends React.Component {
     downloadMe(dl, 'downloads.json')
   }
 
-  // async downloadCookies() {
-  //   const dl = await browser.cookies.getAll({})
-  //   downloadMe(dl, 'cookies.json')
-  // }
+  async downloadCookies() {
+    const dl = await browser.cookies.getAll({})
+    downloadMe(dl, 'cookies.json')
+  }
 
   async componentDidMount () {
     // stub
