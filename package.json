@@ -3,13 +3,18 @@
   "version": "0.2.0",
   "description": "Provides information about online tracking",
   "scripts": {
-    "buildext": "wp --progress --config extension/webpack.dev.js",
-    "buildext:prod": "wp --progress --config extension/webpack.prod.js",
-    "buildext:watch": "wp -w --progress --config extension/webpack.dev.js",
+    "ext:build": "wp --progress --config extension/webpack.dev.js",
+    "ext:build:prod": "wp --progress --config extension/webpack.prod.js",
+    "ext:build:watch": "wp -w --progress --config extension/webpack.dev.js",
+    "ext:start": "web-ext run -s extension/extension -u 'about:addons' -u 'about:debugging'",
     "lint": "npm run lint:js; npm run lint:webext",
     "lint:js": "standardx",
     "lint:webext": "web-ext lint -s extension/extension",
-    "start:firefox": "web-ext run -s extension/extension -u 'about:addons' -u 'about:debugging'"
+    "scrape": "node scraper/scrape.js",
+    "web:build": "wp --progress --config webapp/webpack.dev.js",
+    "web:build:prod": "wp --progress --config webapp/webpack.prod.js",
+    "web:build:watch": "wp -w --progress --config webapp/webpack.dev.js",
+    "web:start": "webpack-dev-server --config webapp/webpack.dev.js --open"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",
@@ -34,7 +39,9 @@
     "uglifyjs-webpack-plugin": "^2.0.1",
     "web-ext": "^2.9.1",
     "webpack": "^4.17.2",
+    "webpack-cli": "^3.1.2",
     "webpack-command": "^0.4.1",
+    "webpack-dev-server": "^3.1.10",
     "webpack-merge": "^4.1.2"
   },
   "dependencies": {
@@ -46,6 +53,7 @@
     "@instructure/ui-alerts": "^5.25.0",
     "@instructure/ui-breadcrumb": "^5.25.0",
     "@instructure/ui-buttons": "^5.25.0",
+    "@instructure/ui-code-editor": "^5.33.0",
     "@instructure/ui-elements": "^5.25.0",
     "@instructure/ui-forms": "^5.25.0",
     "@instructure/ui-icons": "^5.25.0",

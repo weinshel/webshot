@@ -22,7 +22,6 @@ class Popup extends React.Component {
     super(props)
     this.state = {
       selectedIndex: 0,
-      maxResults: 99999
     }
 
     this.liberateData = this.liberateData.bind(this)
@@ -36,8 +35,9 @@ class Popup extends React.Component {
 
   async downloadHistory () {
     const hist = await browser.history.search({
-       text: "",
-       startTime: 0
+      text: '',
+      startTime: 0,
+      maxResults: 100000
     })
     downloadMe(hist, 'history.json')
   }

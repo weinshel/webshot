@@ -1,7 +1,6 @@
 extension/extension/dist/
+webapp/dist/
 data/
-screenshots/
-res/
 
 # Logs
 logs
