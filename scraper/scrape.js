@@ -7,7 +7,9 @@
 
 const puppeteer = require('puppeteer')
 const fs = require('fs')
+const http = require('http')
 const https = require('https')
+const fetchFavicon = require('@meltwater/fetch-favicon').fetchFavicon
 
 const inferencing = require('./inferencing')
 
@@ -29,14 +31,41 @@ async function main () {
       await page.goto(p.url)
       await page.screenshot({ path: 'data/res/screenshots/' + p.id + '.png', fullPage: true })
 
+      try {
+        const themeColor = await page.$eval("head > meta[name='theme-color']", e => e.content)
+        p.themeColor = themeColor
+      } catch (e) {
+        ;
+      }
+      // try {
+      //   const faviconurl = await page.$eval("head > link[rel='shortcut icon']", e => e.href)
+      //   let favicon = new XMLHttpRequest()
+      //   favicon.responseType = 'blob'
+      //   favicon.open('get', faviconurl)
+      //   favicon.onload = () => {
+      //     var fileReader = new FileReader()
+      //     // fileReader.onloadend = () => {
+      //     //   // fileReader.result is a data-URL (string) in base 64 format
+      //     //   console.log(fileReader.result)
+
+      //     // }
+      //     // favicon.response is a Blob object
+      //     d = fileReader.readAsDataURL(favicon.response)
+      //     console.log(d)
+      //   };
+      //   favicon.send();
+      //   p.favicon = favicon
+      // } catch (e) {
+      //   ;
+      // }
+
+      const fav = await fetchFavicon(p.url) // await page.evaluate(getFaviconURL)
+      console.log(fav)
+      const s = fav.split('.')
+      const ext = s[s.length - 1]
+      download(fav, 'data/res/favicons/' + p.id + '.' + ext)
+
       const text = await page.$eval('body', extractTextFromNode)
-
-      // favicon
-      // const fav = await page.evaluate(getFaviconURL)
-      // const s = fav.split('.')
-      // const ext = s[s.length - 1]
-      // download(fav, 'res/favicons/' + p.id + '.' + ext)
-
       const i = await inferencing.infer(text)
       p.inference = i
 
@@ -53,9 +82,15 @@ async function main () {
 
 function download (url, dest) {
   const file = fs.createWriteStream(dest)
-  const request = https.get(url, function (response) {
-    response.pipe(file)
-  })
+  if (url.startsWith('https')) {
+    const request = https.get(url, function (response) {
+      response.pipe(file)
+    })
+  } else {
+    const request = http.get(url, function (response) {
+      response.pipe(file)
+    })
+  }
 }
 
 function extractTextFromNode (node) {
@@ -71,12 +106,12 @@ function extractTextFromNode (node) {
   return res
 }
 
-function getFaviconURL () {
-  const faviconElement = document.querySelector('link[rel*="icon"]')
+// function getFaviconURL () {
+//   const faviconElement = document.querySelector('link[rel="shortcut icon"]')
 
-  const fav = faviconElement && faviconElement.getAttribute('href')
+//   const fav = faviconElement && faviconElement.getAttribute('href')
 
-  return fav
-}
+//   return fav
+// }
 
 main()

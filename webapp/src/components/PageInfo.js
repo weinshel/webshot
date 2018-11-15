@@ -43,6 +43,7 @@ export default class PageInfo extends React.Component {
           <strong>Last visit time:</strong> {Date(data.lastVisitTime)}<br />
         </p>
       </Text>
+      {data.themeColor && <div style={{ width: 100, height: 100, backgroundColor: data.themeColor }} />}
     </div>)
   }
 }

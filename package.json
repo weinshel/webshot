@@ -64,6 +64,8 @@
     "@instructure/ui-tabs": "^5.25.0",
     "@instructure/ui-themes": "^5.25.0",
     "@instructure/ui-toggle-details": "^5.25.0",
+    "@meltwater/fetch-favicon": "^1.0.4",
+    "isomorphic-fetch": "^2.2.1",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
     "snowball": "^0.3.1"
