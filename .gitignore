@@ -1,5 +1,7 @@
 extension/extension/dist/
 data/
+screenshots/
+res/
 
 # Logs
 logs
